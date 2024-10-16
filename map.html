@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Gökay Kalkan - Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        .map {
+            display: flex;
+            width: 90%;
+            height: 80vh;
+            z-index: -2;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">Gökay Kalkan</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="map-button">
+            <a href="map.html">Map</a>
+        </div>
+    </nav>
+
+    <header id="map" style="height: 90vh; display: flex; justify-content: center; align-items: center;">
+
+        <main>
+            <div id="map" class="map"></div>
+        </main>
+
+
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <script>
+
+            var map = L.map('map').setView([39.9334, 32.8597], 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+
+            var cities = [
+                { name: 'Ankara', coords: [39.9334, 32.8597] },
+                { name: 'Muğla/Marmaris', coords: [36.863411, 28.275040] },
+                { name: 'İzmir/Efes', coords: [37.9415744648932, 27.341454367041983] },
+                { name: 'Antalya', coords: [36.9092, 30.6954] },
+                { name: 'Bursa', coords: [40.1826, 29.0610] },
+                { name: 'Çanakkale', coords: [40.1536, 26.4091] },
+                { name: 'Eskişehir', coords: [39.7767, 30.5206] },
+                { name: 'Muğla', coords: [37.2153, 28.3635] },
+                { name: 'Balıkesir', coords: [39.6495, 27.8870] },
+                { name: 'Denizli', coords: [37.4675, 29.0868] },
+                { name: 'Malatya', coords: [38.4192, 38.3097] }
+            ];
+
+
+            cities.forEach(function (city) {
+                L.marker(city.coords).addTo(map)
+                    .bindPopup(city.name)
+                    .openPopup();
+            });
+        </script>
+
+    </header>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>© 2024 Gökay Kalkan. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
