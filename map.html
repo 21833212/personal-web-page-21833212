@@ -12,7 +12,19 @@
             display: flex;
             width: 90%;
             height: 80vh;
-            z-index: -2;
+            z-index: 1;
+        }
+
+        .image-popup {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 300px;
+            height: auto;
+            display: none;
+            border: 2px solid #ddd;
+            z-index: 1000;
+            /* Haritanın üstünde görünmesi için yüksek z-index */
         }
     </style>
 </head>
@@ -31,43 +43,56 @@
     </nav>
 
     <header id="map" style="height: 90vh; display: flex; justify-content: center; align-items: center;">
-
         <main>
             <div id="map" class="map"></div>
+            <!-- Resmin haritanın üstünde görünmesi için img öğesi -->
+            <img id="city-image" class="image-popup" />
         </main>
-
 
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
         <script>
-
             var map = L.map('map').setView([39.9334, 32.8597], 6);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
 
-
+            // Şehirlerin listesi
             var cities = [
-                { name: 'Ankara', coords: [39.9334, 32.8597] },
-                { name: 'Muğla/Marmaris', coords: [36.863411, 28.275040] },
-                { name: 'İzmir/Efes', coords: [37.9415744648932, 27.341454367041983] },
-                { name: 'Antalya', coords: [36.9092, 30.6954] },
-                { name: 'Bursa', coords: [40.1826, 29.0610] },
-                { name: 'Çanakkale', coords: [40.1536, 26.4091] },
-                { name: 'Eskişehir', coords: [39.7767, 30.5206] },
-                { name: 'Muğla', coords: [37.2153, 28.3635] },
-                { name: 'Balıkesir', coords: [39.6495, 27.8870] },
-                { name: 'Denizli', coords: [37.4675, 29.0868] },
-                { name: 'Malatya', coords: [38.4192, 38.3097] }
+                { name: 'Ankara', coords: [39.9334, 32.8597], image: 'https://i.hizliresim.com/54sbdco.jpeg' },
+                { name: 'Marmaris / Muğla', coords: [36.863411, 28.275040], image: 'https://i.hizliresim.com/ldwk6rj.jpeg' },
+                { name: 'Efes / İzmir', coords: [37.9415744648932, 27.341454367041983], image: 'https://i.hizliresim.com/l8meuq7.jpeg' },
+                { name: 'Muğla', coords: [37.2153, 28.3635], image: 'https://i.hizliresim.com/ptor0ld.jpeg' },
+
+                { name: 'Eskişehir', coords: [39.5885, 31.096], image: 'https://i.hizliresim.com/mt71vbv.jpeg' },
+                { name: 'Pamukkale / Denizli', coords: [37.736553, 29.090733], image: 'https://i.hizliresim.com/jy4szez.jpeg' },
+                { name: 'Kalkan / Antalya', coords: [36.267567, 29.412594], image: 'https://i.hizliresim.com/74pfn4a.jpeg' },
+                { name: 'Alanya / Antalya', coords: [36.536574, 31.998763], image: 'https://i.hizliresim.com/ms00x4p.jpeg' },
+                { name: 'Kadıköy / İstanbul', coords: [40.990461, 29.029157], image: 'https://i.hizliresim.com/l7bx7ve.jpeg' },
+                { name: 'Adana', coords: [37.002955, 35.319457], image: 'https://i.hizliresim.com/taiylls.jpeg' },
+                { name: 'Hacettepe / Ankara', coords: [39.87200252004992, 32.73562470929395], image: 'https://i.hizliresim.com/qkehgbt.jpeg' },
+
             ];
 
+            // Görsel için referans
+            var imagePopup = document.getElementById('city-image');
 
+            // Şehir işaretleyicilerini ekleyelim
             cities.forEach(function (city) {
-                L.marker(city.coords).addTo(map)
-                    .bindPopup(city.name)
-                    .openPopup();
+                var marker = L.marker(city.coords).addTo(map)
+                    .bindPopup(city.name);
+
+                // İşaretleyici üzerine gelince görseli göster
+                marker.on('mouseover', function () {
+                    imagePopup.src = city.image;
+                    imagePopup.style.display = 'block';
+                });
+
+                // İşaretleyiciden çıkınca görseli gizle
+                marker.on('mouseout', function () {
+                    imagePopup.style.display = 'none';
+                });
             });
         </script>
-
     </header>
 
     <footer class="footer">
