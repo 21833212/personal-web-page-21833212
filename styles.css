@@ -168,6 +168,14 @@ header {
     justify-content: start;
 }
 
+.right-side h1 {
+    margin: 30px;
+}
+
+.right-side p {
+    margin: 30px;
+}
+
 .left-side {
     width: 60%;
     position: relative;
@@ -276,4 +284,13 @@ header {
     margin: 0 10px;
     color: white;
     text-decoration: none;
+}
+
+#contact h2 {
+    margin-bottom: 20px;
+}
+
+#contact p {
+    margin: 20px;
+
 }
